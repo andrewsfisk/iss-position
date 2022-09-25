@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Location from './Location';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+	constructor() {
+		super()
+		this.state = {
+			iss_position: {}
+			}
+		}
+
+	componentDidMount() {
+		fetch('http://api.open-notify.org/iss-now.json')
+		.then(response => response.json())
+		.then (position => this.setState({iss_position: position}));
+	}
+
+	render() {
+		return (
+			<div>
+				<Location />
+			</div>
+		);
+	}
 }
 
 export default App;
